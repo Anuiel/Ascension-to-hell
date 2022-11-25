@@ -21,6 +21,7 @@
 * [ ] *Shop*
 * [ ] *Assets*
 * [ ] *UI*
+* [ ] *Soundtrack*
 * [ ] *Progression*
    - [ ] Wave progression
    - [ ] Overall progression
