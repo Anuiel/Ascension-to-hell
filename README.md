@@ -1,13 +1,19 @@
 # Ascension-to-hell
 
-### Core features to implement:
-- Generate battlefield 
-- Implement basic player control
-- Implement enemies
-- Implement weaponry
-
-### Core idea: 
-- Fast-pace game
-- One single location for every battle that can change over time
-- Weapon and accessory interaction
-- Multiplayer (Maybe)
+### Order to implement 
+* [ ] Movement 
+  - [ ] Regular springing
+  - [ ] Dash 
+* [ ] Guns
+  - [ ] Firearm
+  - [ ] Melee
+* [ ] Enemies
+  - [ ] Firearm 
+  - [ ] Melee
+* [ ] Battlefield
+  - [ ] Existence
+  - [ ] Generating
+* [ ] Accessories  
+* [ ] Shop
+* [ ] Assets
+* [ ] Multiplayer 
