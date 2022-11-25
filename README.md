@@ -1,7 +1,10 @@
 # Ascension-to-hell
 
-### Order to implement 
-* [ ] Movement 
+### Order to implement
+
+*Italic font* means implementation outside the 3 weeks deadline.
+
+* [ ] Movement
   - [ ] Regular springing
   - [ ] Dash 
 * [ ] Guns
@@ -10,10 +13,11 @@
 * [ ] Enemies
   - [ ] Firearm 
   - [ ] Melee
+  - [ ] *Complex generating*
 * [ ] Battlefield
   - [ ] Existence
-  - [ ] Generating
-* [ ] Accessories  
-* [ ] Shop
-* [ ] Assets
-* [ ] Multiplayer 
+  - [ ] *Generating*
+* [ ] *Accessories*
+* [ ] *Shop*
+* [ ] *Assets*
+* [ ] *Multiplayer* 
