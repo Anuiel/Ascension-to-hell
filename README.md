@@ -21,4 +21,5 @@
 * [ ] *Shop*
 * [ ] *Assets*
 * [ ] *UI*
+* [ ] *Progression*
 * [ ] *Multiplayer* 
