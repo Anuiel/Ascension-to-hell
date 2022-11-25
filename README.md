@@ -22,4 +22,6 @@
 * [ ] *Assets*
 * [ ] *UI*
 * [ ] *Progression*
+   - [ ] Wave progression
+   - [ ] Overall progression
 * [ ] *Multiplayer* 
