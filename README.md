@@ -23,6 +23,6 @@
 * [ ] *UI*
 * [ ] *Soundtrack*
 * [ ] *Progression*
-   - [ ] Wave progression
-   - [ ] Overall progression
+   - [ ] *Wave progression*
+   - [ ] *Overall progression*
 * [ ] *Multiplayer* 
