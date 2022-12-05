@@ -5,8 +5,8 @@ using UnityEngine;
 public class LivingCreature : MonoBehaviour
 {
     [SerializeField]
-    int maxHP;
-    int currentHP;
+    protected int maxHP;
+    protected int currentHP;
     // Start is called before the first frame update
     void Start()
     {

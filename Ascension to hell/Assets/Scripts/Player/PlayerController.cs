@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    float speed = 5;
+    float speed;
     private PlayerInput playerInput;
 
     // Start is called before the first frame update
@@ -19,8 +19,18 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // basic movement
-        Vector2 movement = new Vector2(playerInput.actions["Hor_mov"].ReadValue<float>(), playerInput.actions["Ver_mov"].ReadValue<float>());
-        movement = Time.deltaTime * speed * movement;
+        float verticalInput = playerInput.actions["Ver_mov"].ReadValue<float>();
+        float horizontalInput = playerInput.actions["Hor_mov"].ReadValue<float>();
+        Vector2 movementVector = SpeedScaler(speed, horizontalInput, verticalInput);
+        Vector2 movement = Time.deltaTime * speed * movementVector;
         gameObject.transform.Translate(movement);
+    }
+
+    Vector2 SpeedScaler(float speed, float hor, float ver)
+    {
+        Vector2 res = new(speed * hor, speed * ver);
+        if (hor * ver != 0)
+            res /= Mathf.Sqrt(2);
+        return res;
     }
 }
