@@ -16,7 +16,6 @@ public class PlayerBeing : LivingCreature
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     void WeaponDrop()
@@ -28,4 +27,5 @@ public class PlayerBeing : LivingCreature
     {
 
     }
+
 }

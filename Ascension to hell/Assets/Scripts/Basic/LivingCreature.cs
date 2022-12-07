@@ -5,8 +5,8 @@ using UnityEngine;
 public class LivingCreature : MonoBehaviour
 {
     [SerializeField]
-    protected int maxHP;
-    protected int currentHP;
+    protected float maxHP;
+    protected float currentHP;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,13 +22,13 @@ public class LivingCreature : MonoBehaviour
         }
     }
 
-    public void takeDamage(int dmg)
+    public void takeDamage(float dmg)
     {
         currentHP -= dmg;
     }
 
-    public virtual void onDeath()
+    public void onDeath()
     {
-        Destroy(gameObject);
+        Destroy(this);
     }
 }
