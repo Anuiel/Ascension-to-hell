@@ -27,8 +27,8 @@ public class LivingCreature : MonoBehaviour
         currentHP -= dmg;
     }
 
-    public virtual void onDeath()
+    public void onDeath()
     {
-        Destroy(gameObject);
+        Destroy(this);
     }
 }
