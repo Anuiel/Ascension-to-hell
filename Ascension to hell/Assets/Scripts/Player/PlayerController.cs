@@ -8,11 +8,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float speed;
     private PlayerInput playerInput;
+    private PlayerBeing playerBeing;
+    private List<GameObject> pickUpWeapon;
 
     // Start is called before the first frame update
     void Awake()
     {
+        pickUpWeapon = new();
         playerInput = GetComponent<PlayerInput>();
+        playerBeing = GetComponent<PlayerBeing>();
     }
 
     // Update is called once per frame
@@ -24,6 +28,22 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = SpeedScaler(speed, horizontalInput, verticalInput);
         Vector2 movement = Time.deltaTime * speed * movementVector;
         gameObject.transform.Translate(movement);
+
+        // shooting
+        Vector2 shootingPoint = playerInput.actions["ShootingTarget"].ReadValue<Vector2>();
+        if (playerInput.actions["Shooting"].triggered)
+        {
+            playerBeing.ShootGun(shootingPoint);
+        }
+
+        // pick up weapon
+        if (pickUpWeapon.Count != 0)
+        {
+            if (playerInput.actions["CollectGun"].triggered)
+            {
+                playerBeing.WeaponPick(pickUpWeapon[0].GetComponent<BasicWeapon>());
+            }
+        }
     }
 
     Vector2 SpeedScaler(float speed, float hor, float ver)
@@ -32,5 +52,21 @@ public class PlayerController : MonoBehaviour
         if (hor * ver != 0)
             res /= Mathf.Sqrt(2);
         return res;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Gun"))
+        {
+            pickUpWeapon.Add(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Gun"))
+        {
+            pickUpWeapon.Remove(collision.gameObject);
+        }
     }
 }

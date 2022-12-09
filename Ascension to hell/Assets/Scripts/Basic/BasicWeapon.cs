@@ -7,10 +7,13 @@ public class BasicWeapon : MonoBehaviour
     [SerializeField]
     int maxShots;
     int currentShots;
+    private Camera cm;
+
     // Start is called before the first frame update
     void Start()
     {
         currentShots = maxShots;
+        cm = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -19,5 +22,10 @@ public class BasicWeapon : MonoBehaviour
         
     }
 
-    public virtual void Shoot(Transform point){}
+    public virtual void Shoot(Vector2 point)
+    {
+        Vector2 shotPoint = cm.ScreenToWorldPoint(point);
+        Debug.Log(shotPoint);
+        currentShots -= 1;
+    }
 }
