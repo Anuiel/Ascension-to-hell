@@ -8,13 +8,13 @@ public class LivingCreature : MonoBehaviour
     protected float maxHP;
     protected float currentHP;
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         currentHP = maxHP;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (currentHP <= 0)
         {
@@ -29,6 +29,6 @@ public class LivingCreature : MonoBehaviour
 
     public void onDeath()
     {
-        Destroy(this);
+        Destroy(gameObject);
     }
 }

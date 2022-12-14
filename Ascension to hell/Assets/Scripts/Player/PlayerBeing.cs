@@ -9,15 +9,17 @@ public class PlayerBeing : LivingCreature
     int weaponIdx;
     
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         weaponIdx = 0;
         currentHP = maxHP;
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
+        base.Update();
         for (int i = 0; i < 2; i++)
         {
             if (equippedWeapon[i] != null)
