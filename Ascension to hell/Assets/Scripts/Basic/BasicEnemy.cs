@@ -5,22 +5,22 @@ using UnityEngine;
 public class BasicEnemy : LivingCreature
 {
     [SerializeField] private float damage;
-
+    public int price = 1;
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
-        
+        base.Update();
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag == "Player") {
+        if (collision.CompareTag("Player")) {
             collision.GetComponent<PlayerBeing>().takeDamage(damage);
         }
-    }  
+    }
 }
