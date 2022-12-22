@@ -164,8 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4101693904703777176, guid: 67892f338ade0c5488044128d053afdd, type: 3}
-  speed: 3.5
-  attack_range: 1
+  speed: 0
   rb: {fileID: 3418808007032614461}
 --- !u!61 &6509914270314977574
 BoxCollider2D:
