@@ -29,6 +29,10 @@ public class LivingCreature : MonoBehaviour
 
     public void onDeath()
     {
+        // end game when player is dead
+        if (gameObject.CompareTag("Player")) {
+            Application.Quit();
+        }
         Destroy(gameObject);
     }
 }
