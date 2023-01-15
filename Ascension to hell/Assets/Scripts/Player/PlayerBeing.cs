@@ -7,6 +7,10 @@ public class PlayerBeing : LivingCreature
     [SerializeField]
     List<BasicWeapon> equippedWeapon = new(2) { null, null };
     int weaponIdx;
+    [SerializeField]
+    int iFrames;
+    [SerializeField]
+    int iFramesTotal;
     
     private SpriteRenderer sr;
     [SerializeField]
@@ -26,18 +30,30 @@ public class PlayerBeing : LivingCreature
         base.Start();
         weaponIdx = 0;
         currentHP = maxHP;
+        iFrames = 0;
     }
 
     // Update is called once per frame
     new void Update()
     {
         base.Update();
+        if (iFrames > 0)
+            iFrames -= 1;
         for (int i = 0; i < 2; i++)
         {
             if (equippedWeapon[i] != null)
             {
                 equippedWeapon[i].transform.position = transform.position;
             }
+        }
+    }
+
+    override public void takeDamage(float dmg)
+    {
+        if (iFrames <= 0)
+        {
+            currentHP -= dmg;
+            iFrames = iFramesTotal;
         }
     }
 
@@ -68,5 +84,11 @@ public class PlayerBeing : LivingCreature
         {
             equippedWeapon[weaponIdx].Shoot(point);
         }
+    }
+
+    public void WeaponSwitch()
+    {
+        weaponIdx += 1;
+        weaponIdx %= 2;
     }
 }

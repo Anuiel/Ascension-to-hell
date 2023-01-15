@@ -22,7 +22,7 @@ public class LivingCreature : MonoBehaviour
         }
     }
 
-    public void takeDamage(float dmg)
+    virtual public void takeDamage(float dmg)
     {
         currentHP -= dmg;
     }
