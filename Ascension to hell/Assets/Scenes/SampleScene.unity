@@ -1500,6 +1500,8 @@ MonoBehaviour:
   equippedWeapon:
   - {fileID: 0}
   - {fileID: 0}
+  iFrames: 0
+  iFramesTotal: 20
   no_weapon: {fileID: 21300000, guid: 85515bf790425264aae37c40100610fb, type: 3}
   with_weapon: {fileID: 21300000, guid: d11c2f5e9169b84469b02304ed823dd3, type: 3}
 --- !u!50 &1460057889

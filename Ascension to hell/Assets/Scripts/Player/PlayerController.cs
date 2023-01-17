@@ -50,6 +50,11 @@ public class PlayerController : MonoBehaviour
             print("Dash");
             StartCoroutine(Dash());
         }
+        // weapon switch
+        if (playerInput.actions["SwitchGun"].triggered)
+        {
+            playerBeing.WeaponSwitch();
+        }
         // shooting
         Vector2 shootingPoint = playerInput.actions["ShootingTarget"].ReadValue<Vector2>();
         if (playerInput.actions["Shooting"].triggered)
