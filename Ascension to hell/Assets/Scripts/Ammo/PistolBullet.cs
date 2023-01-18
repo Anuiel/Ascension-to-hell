@@ -12,9 +12,9 @@ public class PistolBullet : MonoBehaviour
     // Start is called before the first frame update
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        gameObject.transform.Translate(speed * Time.deltaTime * direction);
+        gameObject.transform.Translate(speed * Time.fixedDeltaTime * direction);
     }
 
     public void SetDirection(Vector2 dir)

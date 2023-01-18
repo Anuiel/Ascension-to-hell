@@ -7,16 +7,12 @@ public class Revolver : BasicWeapon
     [SerializeField]
     float damage;
     [SerializeField]
-    float shotCooldown;
-    [SerializeField]
     LineRenderer lineRenderer; 
-    private bool canShoot;
 
     // Start is called before the first frame update
     void Start()
     {
         Starting();
-        canShoot = true;
         lineRenderer.enabled = false;
     }
 
@@ -26,15 +22,13 @@ public class Revolver : BasicWeapon
         
     }
 
-    public override void Shoot(Vector2 point)
+    public override bool Shoot(Vector2 point)
     {
-        if (!canShoot) {
-            return;
+        if (!base.Shoot(point)) {
+            return false;
         }
-
-        base.Shoot(point);
         Vector2 gunPos = transform.position;
-        Vector2 direction = shotPoint - gunPos;
+        Vector2 direction = shotDirection;
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, direction);
         StartCoroutine(RenderShootTrail(gunPos, hitInfo.point));
 
@@ -42,7 +36,7 @@ public class Revolver : BasicWeapon
             Debug.Log(hitInfo.collider);
             hitInfo.collider.gameObject.GetComponent<LivingCreature>().takeDamage(damage);
         }
-        StartCoroutine(ShootCooldown());
+        return true;
     }
 
     private IEnumerator RenderShootTrail (Vector2 from, Vector2 to) {
@@ -51,11 +45,5 @@ public class Revolver : BasicWeapon
         lineRenderer.enabled = true;
         yield return new WaitForSeconds(0.2f);
         lineRenderer.enabled = false;
-    }
-
-    private IEnumerator ShootCooldown() {
-        canShoot = false;
-        yield return new WaitForSeconds(shotCooldown);
-        canShoot = true;
     }
 }

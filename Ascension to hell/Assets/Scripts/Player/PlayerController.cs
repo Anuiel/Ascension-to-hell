@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Rigidbody2D rb;
 
+
     private Camera cm;
 
     // Start is called before the first frame update
@@ -47,7 +48,6 @@ public class PlayerController : MonoBehaviour
     {
         // dash
         if (playerInput.actions["Dash"].triggered && canDash) {
-            print("Dash");
             StartCoroutine(Dash());
         }
         // weapon switch
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         }
         // shooting
         Vector2 shootingPoint = playerInput.actions["ShootingTarget"].ReadValue<Vector2>();
-        if (playerInput.actions["Shooting"].triggered)
+        if (playerInput.actions["Shooting"].ReadValue<float>() > 0)
         {
             playerBeing.ShootGun(shootingPoint);
         }
@@ -96,9 +96,8 @@ public class PlayerController : MonoBehaviour
         float verticalInput = playerInput.actions["Ver_mov"].ReadValue<float>();
         float horizontalInput = playerInput.actions["Hor_mov"].ReadValue<float>();
         Vector2 movementVector = SpeedScaler(speed, horizontalInput, verticalInput);
-        Vector2 movement = Time.deltaTime * speed * movementVector;
-        rb.MovePosition(rb.position + movement);
-        // gameObject.transform.Translate(movement);
+        Vector2 movement = speed * movementVector;
+        rb.velocity = movement;
     }
 
     private IEnumerator Dash() {
@@ -109,7 +108,7 @@ public class PlayerController : MonoBehaviour
         
         if ((verticalInput != 0 || horizontalInput != 0) && dashCurrentAmount > 0) {
             isDashing = true;
-            rb.velocity = movementVector * dashPower;
+            rb.AddForce(movementVector * dashPower, ForceMode2D.Impulse);
             yield return new WaitForSeconds(dashTime);
             isDashing = false;
             StartCoroutine(ReloadDash());
