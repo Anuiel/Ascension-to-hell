@@ -19,11 +19,14 @@ public class Pistol : BasicWeapon
         
     }
 
-    public override void Shoot(Vector2 point)
+    public override bool Shoot(Vector2 point)
     {
-        base.Shoot(point);
+        if (!base.Shoot(point)) {
+            return false;
+        }
         GameObject bul = Instantiate(bullet, position:transform.position, rotation:transform.rotation);
         Vector2 pos = transform.position;
-        bul.GetComponent<PistolBullet>().SetDirection(shotPoint - pos);
+        bul.GetComponent<PistolBullet>().SetDirection(shotDirection);
+        return true;
     }
 }
