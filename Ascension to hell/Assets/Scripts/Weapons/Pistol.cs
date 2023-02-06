@@ -26,7 +26,9 @@ public class Pistol : BasicWeapon
         }
         GameObject bul = Instantiate(bullet, position:transform.position, rotation:transform.rotation);
         Vector2 pos = transform.position;
-        bul.GetComponent<PistolBullet>().SetDirection(shotDirection);
+        bul.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        //bul.GetComponent<PistolBullet>().SetDirection(shotDirection);
+        bul.transform.Rotate(0, 0, Mathf.Atan2(shotDirection.y, shotDirection.x) * Mathf.Rad2Deg);
         return true;
     }
 }

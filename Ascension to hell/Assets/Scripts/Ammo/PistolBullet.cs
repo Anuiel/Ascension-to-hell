@@ -8,7 +8,7 @@ public class PistolBullet : MonoBehaviour
     float speed;
     [SerializeField]
     float dmg;
-    Vector2 direction = new Vector2(0, 0);
+    Vector2 direction = new Vector2(1, 0);
     // Start is called before the first frame update
 
     // Update is called once per frame
