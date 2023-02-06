@@ -83,6 +83,7 @@ public class PlayerBeing : LivingCreature
         if (equippedWeapon[weaponIdx] != null)
         {
             equippedWeapon[weaponIdx].Shoot(point);
+            Debug.Log(point);
         }
     }
 

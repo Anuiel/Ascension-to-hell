@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
         }
         // shooting
         Vector2 shootingPoint = playerInput.actions["ShootingTarget"].ReadValue<Vector2>();
+        Rotate(GetMousePosition(shootingPoint));
         if (playerInput.actions["Shooting"].ReadValue<float>() > 0)
         {
             playerBeing.ShootGun(shootingPoint);
