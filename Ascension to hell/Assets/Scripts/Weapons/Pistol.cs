@@ -29,6 +29,7 @@ public class Pistol : BasicWeapon
         bul.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         //bul.GetComponent<PistolBullet>().SetDirection(shotDirection);
         bul.transform.Rotate(0, 0, Mathf.Atan2(shotDirection.y, shotDirection.x) * Mathf.Rad2Deg);
+        bul.GetComponent<PistolBullet>().setVelocity(shotDirection);
         return true;
     }
 }

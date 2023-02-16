@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 30
   dmg: 100
+  pierce: 5
 --- !u!50 &2153471736907311310
 Rigidbody2D:
   serializedVersion: 4
