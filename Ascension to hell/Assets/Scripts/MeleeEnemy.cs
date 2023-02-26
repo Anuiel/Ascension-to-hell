@@ -30,6 +30,6 @@ public class MeleeEnemy : MonoBehaviour
     private void Awake()
     {
         GetComponent<AIDestinationSetter>().target = GameObject.Find("Player").GetComponent<Transform>();
-        path.maxSpeed = Random.Range(3, 8);
+        path.maxSpeed = Random.Range(8, 12);
     }
 }

@@ -15,8 +15,8 @@ TagManager:
   - UI
   - Enemy
   - Wall
-  - 
-  - 
+  - Player
+  - Minimap
   - 
   - 
   - 
@@ -45,4 +45,7 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 3342838135
+    locked: 0
+  - name: Minimap
+    uniqueID: 1747508557
     locked: 0
