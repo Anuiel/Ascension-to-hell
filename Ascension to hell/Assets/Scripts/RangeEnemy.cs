@@ -17,13 +17,23 @@ public class RangeEnemy : MonoBehaviour
     private ContactFilter2D filter2D;
     
     private bool canShoot = true;
+    private float shootCooldown;
+    private float timeFromLastShot = 0;
 
     void Start() {
+        shootCooldown = 1 / shootSpeed;
+
         filter2D = new ContactFilter2D {
             useTriggers = false,
             useLayerMask = true
         };
         filter2D.SetLayerMask(LayerMask.GetMask("Player") | LayerMask.GetMask("Wall"));
+    }
+
+    void Update() {
+        if (timeFromLastShot <= shootCooldown) {
+            timeFromLastShot += Time.deltaTime;
+        }
     }
 
     void FixedUpdate()
@@ -48,14 +58,14 @@ public class RangeEnemy : MonoBehaviour
     }
 
     private void Shoot() {
-        if (canShoot) {
+        if (canShoot && timeFromLastShot >= shootCooldown) {
             GameObject bul = Instantiate(
                 bullet, 
                 position: transform.position, 
                 rotation: Quaternion.AngleAxis(-90f, Vector3.forward) * transform.rotation
             );
             bul.GetComponent<EnemyBullet>().SetDirection(DirectionToPlayer());
-            StartCoroutine(ShootCooldown());
+            timeFromLastShot = 0;
         }
     }
 
@@ -64,10 +74,4 @@ public class RangeEnemy : MonoBehaviour
         int objectsHit = Physics2D.Raycast(transform.position, direction, filter2D, hits, maxDistance);
         return (objectsHit > 0 && hits[0].collider != null && hits[0].collider.gameObject == player);
     }
-
-    private IEnumerator ShootCooldown() {
-        canShoot = false;
-        yield return new WaitForSeconds(1f / shootSpeed);
-        canShoot = true;
-   }
 }
