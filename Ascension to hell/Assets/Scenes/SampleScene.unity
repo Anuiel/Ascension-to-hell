@@ -2023,7 +2023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1208732726
 Transform:
   m_ObjectHideFlags: 0
@@ -22721,9 +22721,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovingRange (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6276189072073013782, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6276189072073013783, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
       propertyPath: burstCount
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6276189072073013783, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
+      propertyPath: spreadAngle
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 6276189072073013783, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
       propertyPath: burstCooldown
@@ -23138,6 +23146,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovingRange (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6276189072073013782, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6276189072073013783, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
+      propertyPath: spreadAngle
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6276189072073013786, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -23318,6 +23334,14 @@ PrefabInstance:
     - target: {fileID: 6276189072073013782, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
       propertyPath: m_Name
       value: MovingRange
+      objectReference: {fileID: 0}
+    - target: {fileID: 6276189072073013782, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6276189072073013783, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
+      propertyPath: spreadAngle
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6276189072073013786, guid: 96c86be44d6ef4f01a9ad0b8de13515f, type: 3}
       propertyPath: m_RootOrder

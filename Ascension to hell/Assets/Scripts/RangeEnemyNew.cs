@@ -14,6 +14,8 @@ public class RangeEnemyNew : MonoBehaviour
     float burstCooldown;
     [SerializeField]
     float maxDistance;
+    [SerializeField]
+    float spreadAngle;
 
     private Transform playerPosition;
     private RaycastHit2D[] hits = new RaycastHit2D[4];
@@ -61,6 +63,11 @@ public class RangeEnemyNew : MonoBehaviour
         return playerPosition.position - transform.position;
     }
 
+    private Vector2 RandomRotation(Vector2 vector, float angle) {
+        float newAngle = Mathf.Atan2(vector.y, vector.x) + Random.Range(-angle, angle) * Mathf.Deg2Rad / 2;
+        return new Vector2(Mathf.Cos(newAngle), Mathf.Sin(newAngle));
+    }
+
     private void Shoot() {
         if (canShoot) {
             if (timeFromLastShot >= shootCooldown) {
@@ -76,7 +83,8 @@ public class RangeEnemyNew : MonoBehaviour
                     position: transform.position, 
                     rotation: Quaternion.AngleAxis(-90f, Vector3.forward) * transform.rotation
                 );
-                bul.GetComponent<EnemyBullet>().SetDirection(DirectionToPlayer());
+                
+                bul.GetComponent<EnemyBullet>().SetDirection(RandomRotation(DirectionToPlayer(), spreadAngle));
             }
         }
     }
