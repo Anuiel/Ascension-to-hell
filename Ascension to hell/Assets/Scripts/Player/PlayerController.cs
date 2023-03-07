@@ -10,21 +10,14 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerBeing playerBeing;
     private List<GameObject> pickUpWeapon;
-
+    
     private bool isDashing;
-    private bool canDash;
-    // [Range(0.1f, 3)]
-    [SerializeField]
-    float dashCooldown;
-    [SerializeField]
-    int dashAmount;
-    private int dashCurrentAmount;
-    // [Range(0.1f, 3)]
-    [SerializeField]
-    float dashTime;
-    // [Range(5, 30)]
-    [SerializeField]
-    float dashPower;
+    private float dashEnergy;
+    private float timeFromLastDash;
+    [SerializeField] float dashCooldown;
+    [SerializeField] int dashAmount;
+    [SerializeField] float dashTime;
+    [SerializeField] float dashPower;
 
     [SerializeField]
     Rigidbody2D rb;
@@ -39,16 +32,24 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerBeing = GetComponent<PlayerBeing>();
         cm = GameObject.Find("Main Camera").GetComponent<Camera>();
-        canDash = true;
-        dashCurrentAmount = dashAmount;
+        isDashing = false;
+        dashEnergy = dashAmount;
+        timeFromLastDash = dashTime;
     }
     
     // Update is called once per frame
     void Update()
     {
+        dashEnergy = Mathf.Min(dashEnergy + Time.deltaTime, dashAmount);
+        if (timeFromLastDash >= dashTime) {
+            isDashing = false;
+        } else {
+            isDashing = true;
+            timeFromLastDash += Time.deltaTime;
+        }
         // dash
-        if (playerInput.actions["Dash"].triggered && canDash) {
-            StartCoroutine(Dash());
+        if (playerInput.actions["Dash"].triggered && !isDashing) {
+            Dash();
         }
         // weapon switch
         if (playerInput.actions["SwitchGun"].triggered)
@@ -101,25 +102,18 @@ public class PlayerController : MonoBehaviour
         rb.velocity = movement;
     }
 
-    private IEnumerator Dash() {
+    private void Dash() {
 
         float verticalInput = playerInput.actions["Ver_mov"].ReadValue<float>();
         float horizontalInput = playerInput.actions["Hor_mov"].ReadValue<float>();
         Vector2 movementVector = SpeedScaler(speed, horizontalInput, verticalInput);
         
-        if ((verticalInput != 0 || horizontalInput != 0) && dashCurrentAmount > 0) {
+        if ((verticalInput != 0 || horizontalInput != 0) && dashEnergy > 1) {
             isDashing = true;
             rb.AddForce(movementVector * dashPower, ForceMode2D.Impulse);
-            yield return new WaitForSeconds(dashTime);
-            isDashing = false;
-            StartCoroutine(ReloadDash());
+            dashEnergy -= 1;
+            timeFromLastDash = 0;
         }
-    }
-
-    private IEnumerator ReloadDash() {
-        dashCurrentAmount -= 1;
-        yield return new WaitForSeconds(dashCooldown);
-        dashCurrentAmount += 1;
     }
 
     Vector2 SpeedScaler(float speed, float hor, float ver)
