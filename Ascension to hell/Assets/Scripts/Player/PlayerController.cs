@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
+        Debug.Log(rb.velocity);
         // basic movement
         if (isDashing) {
             return;
@@ -110,6 +111,7 @@ public class PlayerController : MonoBehaviour
         
         if ((verticalInput != 0 || horizontalInput != 0) && dashEnergy > 1) {
             isDashing = true;
+            Debug.Log(movementVector * dashPower);
             rb.AddForce(movementVector * dashPower, ForceMode2D.Impulse);
             dashEnergy -= 1;
             timeFromLastDash = 0;
