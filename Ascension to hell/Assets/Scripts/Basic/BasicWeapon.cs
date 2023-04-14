@@ -16,6 +16,8 @@ public class BasicWeapon : MonoBehaviour
 
     protected bool canShoot = true;
 
+    public PlayerController player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +41,7 @@ public class BasicWeapon : MonoBehaviour
         return true;
     }
 
-    private IEnumerator Reload() {
+    protected virtual IEnumerator Reload() {
         canShoot = false;
         yield return new WaitForSeconds(1f / shotsPerSeconds);
         canShoot = true;

@@ -72,6 +72,7 @@ public class PlayerBeing : LivingCreature
         {
             WeaponDrop(weaponIdx);
         }
+        gun.player = this.GetComponent<PlayerController>();
         gun.GetComponent<BoxCollider2D>().enabled = false;
         gun.GetComponent<SpriteRenderer>().enabled = false;
         equippedWeapon[weaponIdx] = gun;
@@ -83,7 +84,6 @@ public class PlayerBeing : LivingCreature
         if (equippedWeapon[weaponIdx] != null)
         {
             equippedWeapon[weaponIdx].Shoot(point);
-            Debug.Log(point);
         }
     }
 
