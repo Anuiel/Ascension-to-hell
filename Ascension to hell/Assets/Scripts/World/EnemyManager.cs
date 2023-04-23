@@ -49,7 +49,7 @@ public class EnemyManager : MonoBehaviour
             int y = Random.Range(0, height);
             if (field[x, y] == FieldManager.TileState.Empty || field[x, y] == FieldManager.TileState.Red)
             {
-                Instantiate(pool[pos], new Vector2(x, y), pool[pos].transform.rotation);
+                Instantiate(pool[pos], new Vector2(x - fm.shiftX, y - fm.shiftY), pool[pos].transform.rotation);
                 flag = true;
             }
             else

@@ -6,10 +6,10 @@ using System.Linq;
 public class FieldManager : MonoBehaviour
 {
     [SerializeField]
-    int shiftX;
+    public int shiftX;
 
     [SerializeField]
-    int shiftY;
+    public int shiftY;
 
     public enum TileState
     {
