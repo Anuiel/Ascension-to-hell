@@ -26,7 +26,7 @@ public class MasterMind : MonoBehaviour
     {
         if (flag)
         {
-            fm.generateField(numberOfBlocks);
+            fm.generateFieldMarine(numberOfBlocks);
         }
         flag = false;
     }
