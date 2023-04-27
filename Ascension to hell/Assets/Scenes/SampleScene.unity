@@ -2825,6 +2825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 20
+  currentHP: 0
   equippedWeapon:
   - {fileID: 0}
   - {fileID: 0}

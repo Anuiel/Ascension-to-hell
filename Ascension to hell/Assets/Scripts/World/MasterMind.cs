@@ -10,24 +10,31 @@ public class MasterMind : MonoBehaviour
     [SerializeField]
     EnemyManager em;
 
-    bool flag;
-
     [SerializeField]
     int numberOfBlocks;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        flag = true;
-    }
+    [SerializeField]
+    int enemies;
 
-    // Update is called once per frame
+
     void Update()
     {
-        if (flag)
+        checkForEnemies();
+    }
+
+    bool checkForEnemies()
+    {
+        if (GameObject.FindObjectOfType<BasicEnemy>() == null)
         {
-            fm.generateFieldMarine(numberOfBlocks);
+            nextStep();
+            return true;
         }
-        flag = false;
+        return false;
+    }
+
+    void nextStep()
+    {
+        fm.generateFieldMarine(numberOfBlocks);
+        em.generateWave(enemies);
     }
 }

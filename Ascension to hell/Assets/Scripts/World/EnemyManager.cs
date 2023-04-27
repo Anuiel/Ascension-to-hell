@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    private List<BasicEnemy> pool;
+    [SerializeField]
+    List<BasicEnemy> pool;
     
     [SerializeField]
     FieldManager fm;
 
     FieldManager.TileState[,] field;
 
-    void generateWave(int maxPrice)
+    public void generateWave(int maxPrice)
     {
         int wavePrice = 0;
         int leftover = maxPrice;
         int tries = 0;
         field = getField();
-        while (tries < 20 && leftover < maxPrice)
+        while (tries < 20 && leftover > 0)
         {
             int choice = Random.Range(0, pool.Count);
             if (pool[choice].price > leftover)
@@ -43,7 +44,7 @@ public class EnemyManager : MonoBehaviour
         int height = fm.fieldHeight;
         bool flag = false;
         int tryy = 0;
-        while (!flag && tryy < 20)
+        while (!flag && tryy < 100)
         {
             int x = Random.Range(0, width);
             int y = Random.Range(0, height);
