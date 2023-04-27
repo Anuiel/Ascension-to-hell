@@ -91,7 +91,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        Debug.Log(rb.velocity);
         // basic movement
         if (isDashing) {
             return;

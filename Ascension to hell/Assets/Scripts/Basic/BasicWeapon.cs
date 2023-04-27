@@ -51,6 +51,7 @@ public class BasicWeapon : MonoBehaviour
     {
         currentShots = maxShots;
         cm = GameObject.Find("Main Camera").GetComponent<Camera>();
+        Debug.Log(this, cm);
     }
 
     protected virtual Vector2 GetMousePosition(Vector2 point)
@@ -61,10 +62,10 @@ public class BasicWeapon : MonoBehaviour
 
     protected virtual Vector2 GetShootingDirection(Vector2 point) {
         Vector2 direction = GetMousePosition(point) - new Vector2(transform.position.x, transform.position.y);
-        return RandomRotation(direction, spreadAngle);
+        return RandomRotation(direction, 0);
     }
 
-    private Vector2 RandomRotation(Vector2 vector, float angle) {
+    protected Vector2 RandomRotation(Vector2 vector, float angle) {
         float newAngle = Mathf.Atan2(vector.y, vector.x) + Random.Range(-angle, angle) * Mathf.Deg2Rad / 2;
         return new Vector2(Mathf.Cos(newAngle), Mathf.Sin(newAngle));
     }
