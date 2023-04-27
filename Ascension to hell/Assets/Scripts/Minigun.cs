@@ -33,6 +33,7 @@ public class Minigun : BasicWeapon
     // Update is called once per frame
     void FixedUpdate()
     {
+        Debug.Log(shotsPerSeconds);
         timeFromLastShot += Time.deltaTime;
         if (timeFromLastShot < shootRecoil) {
             player.GetComponent<Rigidbody2D>().AddForce(lastShotDirection * -shotPower);
@@ -62,9 +63,9 @@ public class Minigun : BasicWeapon
         Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
 
         timeFromLastShot = 0;    
-        lastShotDirection = RandomRotation(shotDirection, spreadAngle);    
+        lastShotDirection = new(shotDirection.x, shotDirection.y);    
         //bul.GetComponent<PistolBullet>().SetDirection(shotDirection);
-        bul.transform.Rotate(0, 0, Mathf.Atan2(lastShotDirection.y, lastShotDirection.x) * Mathf.Rad2Deg);
+        bul.transform.Rotate(0, 0, Mathf.Atan2(shotDirection.y, shotDirection.x) * Mathf.Rad2Deg);
         return true;
     }
 }
