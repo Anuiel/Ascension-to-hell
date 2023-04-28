@@ -39,13 +39,19 @@ public class FieldManager : MonoBehaviour
         new List<Vector2> { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, -1) }, // t 90
         new List<Vector2> { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, -1), new Vector2(2, 0) }, // t 180
         new List<Vector2> { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, -1) }, // t 270
-        new List<Vector2> { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(0, 1), new Vector2(0, 1), new Vector2(1, 1), new Vector2(2, 1), new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2)}
+        new List<Vector2> { 
+            new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), 
+            new Vector2(0, 1), new Vector2(0, 1), new Vector2(1, 1), 
+            new Vector2(2, 1), new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2)
+        }
     };
 
     [SerializeField]
     List<float> figProbs = new List<float>();
 
-    List<float> weights = new List<float> { 0.5f, 0.5f, 1, 0.5f, 0.5f, 0.5f, 0.5f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.01f };
+    List<float> weights = new List<float> { 
+        0.5f, 0.5f, 1, 0.5f, 0.5f, 0.5f, 0.5f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.25f, 0.01f
+    };
 
     [SerializeField]
     public int fieldWidth;
@@ -67,10 +73,13 @@ public class FieldManager : MonoBehaviour
     [SerializeField]
     float prob = 0.5f;
 
+    private GameObject[,] obstacleReference;
+
     void Start()
     {
         walls = new List<Vector2> { };
         field = new TileState[fieldWidth, fieldHeight];
+        obstacleReference = new GameObject[fieldWidth, fieldHeight];
         for (int i = 0; i < fieldWidth; i++)
         {
             for (int j = 0; j < fieldHeight; j++)
@@ -128,7 +137,21 @@ public class FieldManager : MonoBehaviour
             {
                 if (field[i, j] == TileState.Wall || field[i, j] == TileState.OuterWall)
                 {
-                    Instantiate(obstacles, new Vector3(i - shiftX, j - shiftY, 0), obstacles.transform.rotation);
+                    obstacleReference[i, j] = Instantiate(obstacles, new Vector3(i - shiftX, j - shiftY, 0), obstacles.transform.rotation);
+                }
+            }
+        }
+    }
+
+    public void clear() {
+        for (int i = 0; i < fieldWidth; i++)
+        {
+            for (int j = 0; j < fieldHeight; j++)
+            {
+                if (obstacleReference[i, j])
+                {
+                    Destroy(obstacleReference[i, j]);
+                    field[i, j] = TileState.Empty;
                 }
             }
         }

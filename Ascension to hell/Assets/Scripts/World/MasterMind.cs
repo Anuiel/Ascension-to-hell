@@ -11,11 +11,13 @@ public class MasterMind : MonoBehaviour
     EnemyManager em;
 
     [SerializeField]
+    int a;
+
+    [SerializeField]
     int numberOfBlocks;
 
     [SerializeField]
     int enemies;
-
 
     void Update()
     {
@@ -34,7 +36,9 @@ public class MasterMind : MonoBehaviour
 
     void nextStep()
     {
+        fm.clear();
         fm.generateFieldMarine(numberOfBlocks);
         em.generateWave(enemies);
+        AstarPath.active.Scan();
     }
 }

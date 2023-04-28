@@ -5,9 +5,13 @@ using UnityEngine;
 public class LivingCreature : MonoBehaviour
 {
     [SerializeField]
-    protected float maxHP;
+    public float maxHP;
     [SerializeField]
-    protected float currentHP;
+    public float currentHP;
+
+    [SerializeField]
+    HealthBar healthBar;
+
     // Start is called before the first frame update
     protected void Start()
     {
@@ -26,6 +30,9 @@ public class LivingCreature : MonoBehaviour
     virtual public void takeDamage(float dmg)
     {
         currentHP -= dmg;
+        if (healthBar) {
+            healthBar.UpdateBar();
+        }
     }
 
     public void onDeath()

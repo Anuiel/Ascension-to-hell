@@ -51,7 +51,6 @@ public class BasicWeapon : MonoBehaviour
     {
         currentShots = maxShots;
         cm = GameObject.Find("Main Camera").GetComponent<Camera>();
-        Debug.Log(this, cm);
     }
 
     protected virtual Vector2 GetMousePosition(Vector2 point)

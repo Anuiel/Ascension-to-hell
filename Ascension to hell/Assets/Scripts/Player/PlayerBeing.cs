@@ -52,7 +52,7 @@ public class PlayerBeing : LivingCreature
     {
         if (iFrames <= 0)
         {
-            currentHP -= dmg;
+            base.takeDamage(dmg);
             iFrames = iFramesTotal;
         }
     }

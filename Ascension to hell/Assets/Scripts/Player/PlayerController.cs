@@ -12,16 +12,16 @@ public class PlayerController : MonoBehaviour
     private List<GameObject> pickUpWeapon;
     
     private bool isDashing;
-    private float dashEnergy;
+    public float dashEnergy; // public for Chargebar
     private float timeFromLastDash;
     [SerializeField] float dashCooldown;
-    [SerializeField] int dashAmount;
+    [SerializeField] public int dashAmount;
     [SerializeField] float dashTime;
     [SerializeField] float dashPower;
+    [SerializeField] ChargeBar chargebar;
 
     [SerializeField]
     Rigidbody2D rb;
-
 
     private Camera cm;
 
@@ -94,7 +94,8 @@ public class PlayerController : MonoBehaviour
         // basic movement
         if (isDashing) {
             return;
-        }   
+        }
+        chargebar.UpdateBar();
         float verticalInput = playerInput.actions["Ver_mov"].ReadValue<float>();
         float horizontalInput = playerInput.actions["Hor_mov"].ReadValue<float>();
         Vector2 movementVector = SpeedScaler(speed, horizontalInput, verticalInput);
@@ -110,7 +111,6 @@ public class PlayerController : MonoBehaviour
         
         if ((verticalInput != 0 || horizontalInput != 0) && dashEnergy > 1) {
             isDashing = true;
-            Debug.Log(movementVector * dashPower);
             rb.AddForce(movementVector * dashPower, ForceMode2D.Impulse);
             dashEnergy -= 1;
             timeFromLastDash = 0;
