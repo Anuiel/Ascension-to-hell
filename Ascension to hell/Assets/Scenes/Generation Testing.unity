@@ -372,8 +372,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069a015eae5744605af4b1bcf9dde673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarImage: {fileID: 1648372129}
+  barImage: {fileID: 1648372129}
   creature: {fileID: 1570987919}
+  isFixed: 1
 --- !u!114 &643185263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,9 +612,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fm: {fileID: 1213582964}
   em: {fileID: 2023360594}
-  a: 0
   numberOfBlocks: 30
-  enemies: 1
+  enemies: 8
 --- !u!1 &1213582961
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,10 +854,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.9
+  dashEnergy: 0
   dashCooldown: 2
   dashAmount: 3
   dashTime: 0.15
   dashPower: 6
+  chargebar: {fileID: 0}
   rb: {fileID: 1570987921}
 --- !u!50 &1570987921
 Rigidbody2D:

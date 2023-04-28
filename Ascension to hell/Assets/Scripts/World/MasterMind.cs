@@ -11,9 +11,6 @@ public class MasterMind : MonoBehaviour
     EnemyManager em;
 
     [SerializeField]
-    int a;
-
-    [SerializeField]
     int numberOfBlocks;
 
     [SerializeField]
@@ -33,7 +30,7 @@ public class MasterMind : MonoBehaviour
         }
         return false;
     }
-
+    
     void nextStep()
     {
         fm.clear();

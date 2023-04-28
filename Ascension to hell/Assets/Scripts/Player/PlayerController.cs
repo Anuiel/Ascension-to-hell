@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
         if (isDashing) {
             return;
         }
-        chargebar.UpdateBar();
+        if (chargebar) {chargebar.UpdateBar();}
         float verticalInput = playerInput.actions["Ver_mov"].ReadValue<float>();
         float horizontalInput = playerInput.actions["Hor_mov"].ReadValue<float>();
         Vector2 movementVector = SpeedScaler(speed, horizontalInput, verticalInput);
