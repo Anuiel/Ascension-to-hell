@@ -14,21 +14,41 @@ public class MasterMind : MonoBehaviour
     int numberOfBlocks;
 
     [SerializeField]
+    Buff buff;
+
+    [SerializeField]
+    float timeBetweenWaves;
+    [SerializeField]
+    float timeToSpawnBuff;
+
+    float timeSinceWaveComplete = 0;
+    bool noEnemiesFlag;
+    bool doesBuffSpawned;
+
+    [SerializeField]
     int enemies;
 
     void Update()
     {
-        checkForEnemies();
+        bool noEnemiesFlag = checkForEnemies();
+        if (noEnemiesFlag) {
+            timeSinceWaveComplete += Time.deltaTime;
+        } else {
+            timeSinceWaveComplete = 0;
+        }
+        if (timeSinceWaveComplete > timeToSpawnBuff && !doesBuffSpawned) {
+            doesBuffSpawned = true;
+            Instantiate(buff, position:transform.position, rotation:transform.rotation);
+        }
+        if (timeSinceWaveComplete > timeBetweenWaves) {
+            doesBuffSpawned = false;
+            nextStep();
+        }
     }
 
     bool checkForEnemies()
     {
-        if (GameObject.FindObjectOfType<BasicEnemy>() == null)
-        {
-            nextStep();
-            return true;
-        }
-        return false;
+        return GameObject.FindObjectOfType<BasicEnemy>() == null;
     }
     
     void nextStep()

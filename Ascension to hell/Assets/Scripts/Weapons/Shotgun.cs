@@ -5,8 +5,6 @@ using UnityEngine;
 public class Shotgun : BasicWeapon
 {
     [SerializeField]
-    GameObject bullet;
-    [SerializeField]
     int pelletsCount;
     // Start is called before the first frame update
     void Start()
@@ -26,12 +24,10 @@ public class Shotgun : BasicWeapon
             return false;
         }
         for (int i = 0; i < pelletsCount; ++i) {
-            GameObject bul = Instantiate(bullet, position:transform.position, rotation:transform.rotation);
+            GameObject bullet = base.SpawnBullet();
             Vector2 pos = transform.position;
-            bul.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            //bul.GetComponent<PistolBullet>().SetDirection(shotDirection);
             Vector2 pelletShotDirection = RandomRotation(shotDirection, spreadAngle);
-            bul.transform.Rotate(0, 0, Mathf.Atan2(pelletShotDirection.y, pelletShotDirection.x) * Mathf.Rad2Deg);
+            bullet.transform.Rotate(0, 0, Mathf.Atan2(pelletShotDirection.y, pelletShotDirection.x) * Mathf.Rad2Deg);
         }
         return true;
     }

@@ -92,4 +92,10 @@ public class PlayerBeing : LivingCreature
         weaponIdx += 1;
         weaponIdx %= 2;
     }
+
+    public void BuffPick(Buff buff) {
+        if (equippedWeapon[weaponIdx] != null) {
+            equippedWeapon[weaponIdx].ApplyBuff(buff);
+        }
+    }
 }

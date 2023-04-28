@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerBeing playerBeing;
     private List<GameObject> pickUpWeapon;
+
+    private List<GameObject> buffs;
     
     private bool isDashing;
     public float dashEnergy; // public for Chargebar
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         pickUpWeapon = new();
+        buffs = new();
         playerInput = GetComponent<PlayerInput>();
         playerBeing = GetComponent<PlayerBeing>();
         cm = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -72,6 +75,13 @@ public class PlayerController : MonoBehaviour
             if (playerInput.actions["CollectGun"].triggered)
             {
                 playerBeing.WeaponPick(pickUpWeapon[0].GetComponent<BasicWeapon>());
+            }
+        }
+        if (buffs.Count != 0) {
+            if (playerInput.actions["CollectGun"].triggered)
+            {
+                playerBeing.BuffPick(buffs[0].GetComponent<Buff>());
+                Destroy(buffs[0]);
             }
         }
     }
@@ -127,9 +137,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Gun"))
+        if (collision.gameObject.CompareTag("Gun"))
         {
             pickUpWeapon.Add(collision.gameObject);
+        } else if (collision.gameObject.CompareTag("Buff")) {
+            buffs.Add(collision.gameObject);
         }
     }
 
@@ -138,6 +150,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Gun"))
         {
             pickUpWeapon.Remove(collision.gameObject);
+        } else if (collision.gameObject.CompareTag("Buff")) {
+            buffs.Remove(collision.gameObject);
         }
     }
 }

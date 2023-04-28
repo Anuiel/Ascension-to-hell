@@ -5,8 +5,6 @@ using UnityEngine;
 public class Minigun : BasicWeapon
 {
     [SerializeField]
-    GameObject bullet;
-    [SerializeField]
     float shotPower;
     [SerializeField]
     float shootRecoil;
@@ -33,7 +31,6 @@ public class Minigun : BasicWeapon
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(shotsPerSeconds);
         timeFromLastShot += Time.deltaTime;
         if (timeFromLastShot < shootRecoil) {
             player.GetComponent<Rigidbody2D>().AddForce(lastShotDirection * -shotPower);
@@ -55,17 +52,15 @@ public class Minigun : BasicWeapon
         if (!base.Shoot(point)) {
             return false;
         }
-        GameObject bul = Instantiate(bullet, position:transform.position, rotation:transform.rotation);
+        GameObject bullet = base.SpawnBullet();
+        
         Vector2 pos = transform.position;
-        bul.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-
-        Debug.Log(transform.position);
         Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
 
         timeFromLastShot = 0;    
         lastShotDirection = new(shotDirection.x, shotDirection.y);    
         //bul.GetComponent<PistolBullet>().SetDirection(shotDirection);
-        bul.transform.Rotate(0, 0, Mathf.Atan2(shotDirection.y, shotDirection.x) * Mathf.Rad2Deg);
+        bullet.transform.Rotate(0, 0, Mathf.Atan2(shotDirection.y, shotDirection.x) * Mathf.Rad2Deg);
         return true;
     }
 }
