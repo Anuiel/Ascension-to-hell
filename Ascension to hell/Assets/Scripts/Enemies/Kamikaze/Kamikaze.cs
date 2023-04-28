@@ -41,9 +41,20 @@ public class Kamikaze : BasicEnemy
         explode = zone.explode;
         if (explode == true)
         {
-            path.canMove = false;
+            // path.canMove = false;
             Invoke(nameof(bomb), explodeDelay);
         }
+    }
+
+    void FixedUpdate()
+    {
+        Vector2 direction = DirectionToPlayer();
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg ;
+        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+    }
+
+    private Vector2 DirectionToPlayer() {
+        return player.transform.position - transform.position;
     }
 
     void bomb()

@@ -81,6 +81,12 @@ public class FieldManager : MonoBehaviour
         field = new TileState[fieldWidth, fieldHeight];
         obstacleReference = new GameObject[fieldWidth, fieldHeight];
         for (int i = 0; i < fieldWidth; i++)
+        FillBorder();
+        figProbs = getProbs(weights);
+    }
+
+    void FillBorder() {
+        for (int i = 0; i < fieldWidth; i++)
         {
             for (int j = 0; j < fieldHeight; j++)
             {
@@ -92,7 +98,6 @@ public class FieldManager : MonoBehaviour
                     field[i, j] = TileState.Empty;
             }
         }
-        figProbs = getProbs(weights);
     }
 
 
@@ -155,6 +160,7 @@ public class FieldManager : MonoBehaviour
                 }
             }
         }
+        FillBorder();
     }
 
     void createFromScratchSym()

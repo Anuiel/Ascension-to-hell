@@ -14,7 +14,7 @@ public class MasterMind : MonoBehaviour
     int numberOfBlocks;
 
     [SerializeField]
-    Buff buff;
+    GameObject buff;
 
     [SerializeField]
     float timeBetweenWaves;
@@ -53,6 +53,7 @@ public class MasterMind : MonoBehaviour
     
     void nextStep()
     {
+        enemies += 2;
         fm.clear();
         fm.generateFieldMarine(numberOfBlocks);
         em.generateWave(enemies);
