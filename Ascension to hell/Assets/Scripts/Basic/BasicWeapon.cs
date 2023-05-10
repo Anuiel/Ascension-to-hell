@@ -10,9 +10,16 @@ public class BasicWeapon : MonoBehaviour
     protected float shotsPerSeconds;
     [SerializeField]
     protected float spreadAngle;
+
+    [SerializeField]
+    protected GameObject bullet;
+
+    protected float damageMultiplier;
+
     protected int currentShots;
     protected Camera cm;
     protected Vector2 shotDirection;
+
 
     protected bool canShoot = true;
 
@@ -30,6 +37,13 @@ public class BasicWeapon : MonoBehaviour
         
     }
 
+    public virtual GameObject SpawnBullet() {
+        GameObject bul = Instantiate(bullet, position:transform.position, rotation:transform.rotation);
+        bul.GetComponent<BasicBullet>().damage *= damageMultiplier;
+        bul.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        return bul;
+    }
+
     public virtual bool Shoot(Vector2 point)
     {
         if (!canShoot) {
@@ -41,6 +55,10 @@ public class BasicWeapon : MonoBehaviour
         return true;
     }
 
+    public void ApplyBuff(Buff buff) {
+        damageMultiplier = buff.ApplyPower(damageMultiplier);
+    }
+
     protected virtual IEnumerator Reload() {
         canShoot = false;
         yield return new WaitForSeconds(1f / shotsPerSeconds);
@@ -50,6 +68,7 @@ public class BasicWeapon : MonoBehaviour
     protected virtual void Starting()
     {
         currentShots = maxShots;
+        damageMultiplier = 1;
         cm = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
@@ -61,10 +80,10 @@ public class BasicWeapon : MonoBehaviour
 
     protected virtual Vector2 GetShootingDirection(Vector2 point) {
         Vector2 direction = GetMousePosition(point) - new Vector2(transform.position.x, transform.position.y);
-        return RandomRotation(direction, spreadAngle);
+        return RandomRotation(direction, 0);
     }
 
-    private Vector2 RandomRotation(Vector2 vector, float angle) {
+    protected Vector2 RandomRotation(Vector2 vector, float angle) {
         float newAngle = Mathf.Atan2(vector.y, vector.x) + Random.Range(-angle, angle) * Mathf.Deg2Rad / 2;
         return new Vector2(Mathf.Cos(newAngle), Mathf.Sin(newAngle));
     }

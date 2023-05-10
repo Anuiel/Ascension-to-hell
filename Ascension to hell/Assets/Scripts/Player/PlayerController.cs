@@ -10,18 +10,20 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerBeing playerBeing;
     private List<GameObject> pickUpWeapon;
+
+    private List<GameObject> buffs;
     
     private bool isDashing;
-    private float dashEnergy;
+    public float dashEnergy; // public for Chargebar
     private float timeFromLastDash;
     [SerializeField] float dashCooldown;
-    [SerializeField] int dashAmount;
+    [SerializeField] public int dashAmount;
     [SerializeField] float dashTime;
     [SerializeField] float dashPower;
+    [SerializeField] ChargeBar chargebar;
 
     [SerializeField]
     Rigidbody2D rb;
-
 
     private Camera cm;
 
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         pickUpWeapon = new();
+        buffs = new();
         playerInput = GetComponent<PlayerInput>();
         playerBeing = GetComponent<PlayerBeing>();
         cm = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -74,6 +77,13 @@ public class PlayerController : MonoBehaviour
                 playerBeing.WeaponPick(pickUpWeapon[0].GetComponent<BasicWeapon>());
             }
         }
+        if (buffs.Count != 0) {
+            if (playerInput.actions["CollectGun"].triggered)
+            {
+                playerBeing.BuffPick(buffs[0].GetComponent<Buff>());
+                Destroy(buffs[0]);
+            }
+        }
     }
 
     private Vector2 GetMousePosition(Vector2 point)
@@ -91,11 +101,11 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        Debug.Log(rb.velocity);
         // basic movement
         if (isDashing) {
             return;
-        }   
+        }
+        if (chargebar) {chargebar.UpdateBar();}
         float verticalInput = playerInput.actions["Ver_mov"].ReadValue<float>();
         float horizontalInput = playerInput.actions["Hor_mov"].ReadValue<float>();
         Vector2 movementVector = SpeedScaler(speed, horizontalInput, verticalInput);
@@ -111,7 +121,6 @@ public class PlayerController : MonoBehaviour
         
         if ((verticalInput != 0 || horizontalInput != 0) && dashEnergy > 1) {
             isDashing = true;
-            Debug.Log(movementVector * dashPower);
             rb.AddForce(movementVector * dashPower, ForceMode2D.Impulse);
             dashEnergy -= 1;
             timeFromLastDash = 0;
@@ -128,9 +137,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Gun"))
+        if (collision.gameObject.CompareTag("Gun"))
         {
             pickUpWeapon.Add(collision.gameObject);
+        } else if (collision.gameObject.CompareTag("Buff")) {
+            buffs.Add(collision.gameObject);
         }
     }
 
@@ -139,6 +150,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Gun"))
         {
             pickUpWeapon.Remove(collision.gameObject);
+        } else if (collision.gameObject.CompareTag("Buff")) {
+            buffs.Remove(collision.gameObject);
         }
     }
 }

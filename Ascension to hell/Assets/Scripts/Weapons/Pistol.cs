@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Pistol : BasicWeapon
 {
-    [SerializeField]
-    GameObject bullet;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -24,11 +21,11 @@ public class Pistol : BasicWeapon
         if (!base.Shoot(point)) {
             return false;
         }
-        GameObject bul = Instantiate(bullet, position:transform.position, rotation:transform.rotation);
+        GameObject bullet = base.SpawnBullet();
+
         Vector2 pos = transform.position;
-        bul.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         //bul.GetComponent<PistolBullet>().SetDirection(shotDirection);
-        bul.transform.Rotate(0, 0, Mathf.Atan2(shotDirection.y, shotDirection.x) * Mathf.Rad2Deg);
+        bullet.transform.Rotate(0, 0, Mathf.Atan2(shotDirection.y, shotDirection.x) * Mathf.Rad2Deg);
         return true;
     }
 }

@@ -52,7 +52,7 @@ public class PlayerBeing : LivingCreature
     {
         if (iFrames <= 0)
         {
-            currentHP -= dmg;
+            base.takeDamage(dmg);
             iFrames = iFramesTotal;
         }
     }
@@ -91,5 +91,11 @@ public class PlayerBeing : LivingCreature
     {
         weaponIdx += 1;
         weaponIdx %= 2;
+    }
+
+    public void BuffPick(Buff buff) {
+        if (equippedWeapon[weaponIdx] != null) {
+            equippedWeapon[weaponIdx].ApplyBuff(buff);
+        }
     }
 }
