@@ -15,10 +15,13 @@ public class PlayerBeing : LivingCreature
     private SpriteRenderer sr;
     [SerializeField]
     Sprite no_weapon;
-    [SerializeField]
-    Sprite with_weapon;
 
     private Camera cm;
+
+    [SerializeField]
+    MasterMind mm;
+
+    GameObject hub;
 
     private void Awake() {
         sr = GetComponent<SpriteRenderer>();    
@@ -28,6 +31,8 @@ public class PlayerBeing : LivingCreature
     new void Start()
     {
         base.Start();
+        hub = GameObject.Find("Hub");
+        transform.position = hub.transform.position;
         weaponIdx = 0;
         currentHP = maxHP;
         iFrames = 0;
@@ -35,15 +40,19 @@ public class PlayerBeing : LivingCreature
 
     // Update is called once per frame
     new void Update()
-    {
+    {           
         base.Update();
         if (iFrames > 0)
             iFrames -= 1;
+        float angle = transform.rotation.eulerAngles[2] * Mathf.Deg2Rad;
         for (int i = 0; i < 2; i++)
         {
             if (equippedWeapon[i] != null)
             {
-                equippedWeapon[i].transform.position = transform.position;
+                equippedWeapon[i].transform.rotation = transform.rotation;
+                float c = Mathf.Cos(angle);
+                float s = Mathf.Sin(angle);
+                equippedWeapon[i].transform.position = transform.position + new Vector3(c, s, 0) * 0.5f + new Vector3(s, -c, 0) * 0.1f;
             }
         }
     }
@@ -61,9 +70,8 @@ public class PlayerBeing : LivingCreature
     {
         BasicWeapon removed = equippedWeapon[idx];
         removed.GetComponent<BoxCollider2D>().enabled = true;
-        removed.GetComponent<SpriteRenderer>().enabled = true;
+        // removed.GetComponent<SpriteRenderer>().enabled = true;
         equippedWeapon[idx] = null;
-        sr.sprite = no_weapon;
     }
 
     public void WeaponPick(BasicWeapon gun)
@@ -74,9 +82,8 @@ public class PlayerBeing : LivingCreature
         }
         gun.player = this.GetComponent<PlayerController>();
         gun.GetComponent<BoxCollider2D>().enabled = false;
-        gun.GetComponent<SpriteRenderer>().enabled = false;
+        // gun.GetComponent<SpriteRenderer>().enabled = false;
         equippedWeapon[weaponIdx] = gun;
-        sr.sprite = with_weapon;
     }
 
     public void ShootGun(Vector2 point)
@@ -89,13 +96,39 @@ public class PlayerBeing : LivingCreature
 
     public void WeaponSwitch()
     {
+        equippedWeapon[weaponIdx].GetComponent<SpriteRenderer>().enabled = false;
         weaponIdx += 1;
         weaponIdx %= 2;
+        equippedWeapon[weaponIdx].GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void BuffPick(Buff buff) {
         if (equippedWeapon[weaponIdx] != null) {
             equippedWeapon[weaponIdx].ApplyBuff(buff);
+        }
+    }
+
+    override public void onDeath()
+    {
+        currentHP = maxHP;
+        base.takeDamage(0);
+        for (int i = 0; i < equippedWeapon.Count; i++)
+        {
+            if (equippedWeapon[i] != null)
+            {
+                Destroy(equippedWeapon[i].gameObject);
+            }
+        }
+        equippedWeapon = new(2) { null, null };
+        transform.position = hub.transform.position;
+        mm.endGame();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Gate"))
+        {
+            mm.newGame();
         }
     }
 }

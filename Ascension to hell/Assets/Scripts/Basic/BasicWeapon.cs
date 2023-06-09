@@ -38,7 +38,7 @@ public class BasicWeapon : MonoBehaviour
     }
 
     public virtual GameObject SpawnBullet() {
-        GameObject bul = Instantiate(bullet, position:transform.position, rotation:transform.rotation);
+        GameObject bul = Instantiate(bullet, position:transform.position, Quaternion.identity);
         bul.GetComponent<BasicBullet>().damage *= damageMultiplier;
         bul.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         return bul;

@@ -27,9 +27,17 @@ public class MasterMind : MonoBehaviour
 
     [SerializeField]
     int enemies;
+    [SerializeField]
+    int startEnemies;
+
+    int waveNumber;
+
+    public bool game = false;
 
     void Update()
     {
+        if (!game)
+            return;
         bool noEnemiesFlag = checkForEnemies();
         if (noEnemiesFlag) {
             timeSinceWaveComplete += Time.deltaTime;
@@ -53,10 +61,27 @@ public class MasterMind : MonoBehaviour
     
     void nextStep()
     {
-        enemies += 2;
+        enemies = waveNumber * 3 + startEnemies;
         fm.clear();
+        numberOfBlocks = Random.Range(20, 150);
         fm.generateFieldMarine(numberOfBlocks);
         em.generateWave(enemies);
         AstarPath.active.Scan();
+    }
+
+    public void endGame()
+    {
+        em.clearEnemies();
+        enemies = startEnemies;
+        game = false;
+        GameObject.Find("Hub").GetComponent<Hub>().SpawnGuns();
+    }
+
+    public void newGame()
+    {
+        waveNumber = 1;
+        game = true;
+        GameObject.Find("Player").transform.position = new Vector3(0, 0, 0);
+        nextStep();
     }
 }

@@ -35,7 +35,7 @@ public class LivingCreature : MonoBehaviour
         }
     }
 
-    public void onDeath()
+    virtual public void onDeath()
     {
         // end game when player is dead
         if (gameObject.CompareTag("Player")) {
