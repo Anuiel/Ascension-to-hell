@@ -65,4 +65,13 @@ public class EnemyManager : MonoBehaviour
     {
         return fm.getField();
     }
+
+    public void clearEnemies()
+    {
+        BasicEnemy[] aliveEnemies= FindObjectsOfType<BasicEnemy>();
+        for (int i = 0; i < aliveEnemies.Length; i++)
+        {
+            Destroy(aliveEnemies[i].gameObject);
+        }
+    }
 }
