@@ -20,6 +20,11 @@ public class PlayerBeing : LivingCreature
 
     private Camera cm;
 
+    [SerializeField]
+    MasterMind mm;
+
+    GameObject hub;
+
     private void Awake() {
         sr = GetComponent<SpriteRenderer>();    
     }
@@ -28,6 +33,8 @@ public class PlayerBeing : LivingCreature
     new void Start()
     {
         base.Start();
+        hub = GameObject.Find("Hub");
+        transform.position = hub.transform.position;
         weaponIdx = 0;
         currentHP = maxHP;
         iFrames = 0;
@@ -35,7 +42,7 @@ public class PlayerBeing : LivingCreature
 
     // Update is called once per frame
     new void Update()
-    {
+    {           
         base.Update();
         if (iFrames > 0)
             iFrames -= 1;
@@ -96,6 +103,29 @@ public class PlayerBeing : LivingCreature
     public void BuffPick(Buff buff) {
         if (equippedWeapon[weaponIdx] != null) {
             equippedWeapon[weaponIdx].ApplyBuff(buff);
+        }
+    }
+
+    override public void onDeath()
+    {
+        currentHP = maxHP;
+        for (int i = 0; i < equippedWeapon.Count; i++)
+        {
+            if (equippedWeapon[i] != null)
+            {
+                Destroy(equippedWeapon[i].gameObject);
+            }
+        }
+        equippedWeapon = new(2) { null, null };
+        transform.position = hub.transform.position;
+        mm.endGame();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Gate"))
+        {
+            mm.newGame();
         }
     }
 }
