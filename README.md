@@ -4,25 +4,25 @@
 
 *Italic font* means implementation outside the 3 weeks deadline.
 
-* [ ] Movement
-  - [ ] Regular springing
-  - [ ] Dash 
-* [ ] Guns
-  - [ ] Firearm
+* [x] Movement
+  - [x] Regular springing
+  - [x] Dash 
+* [x] Guns
+  - [x] Firearm
   - [ ] Melee
-* [ ] Enemies
-  - [ ] Firearm 
-  - [ ] Melee
-  - [ ] *Complex generating*
-* [ ] Battlefield
-  - [ ] Existence
-  - [ ] *Generating*
-* [ ] *Accessories*
+* [x] Enemies
+  - [x] Firearm 
+  - [x] Melee
+  - [x] *Complex generating*
+* [x] Battlefield
+  - [x] Existence
+  - [x] *Generating*
+* [x] *Accessories*
 * [ ] *Shop*
 * [ ] *Assets*
-* [ ] *UI*
+* [x] *UI*
 * [ ] *Soundtrack*
 * [ ] *Progression*
-   - [ ] *Wave progression*
+   - [x] *Wave progression*
    - [ ] *Overall progression*
 * [ ] *Multiplayer* 
