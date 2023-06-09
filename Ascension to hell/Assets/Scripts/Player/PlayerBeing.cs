@@ -109,6 +109,7 @@ public class PlayerBeing : LivingCreature
     override public void onDeath()
     {
         currentHP = maxHP;
+        base.takeDamage(0);
         for (int i = 0; i < equippedWeapon.Count; i++)
         {
             if (equippedWeapon[i] != null)
